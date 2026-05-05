@@ -2,13 +2,13 @@
 Add-Type -AssemblyName System.Drawing
 
 $sourcePath = "c:\Users\Ramoncito\.antigravity\UYARIY-SUMAK\assets\img\Alfabeto-Manual-Argentino-LSA-CAS-1086x1536.png"
-$outputPath = "c:\Users\Ramoncito\.antigravity\UYARIY-SUMAK\assets\alphabet\"
+$outputPath = "c:\Users\Ramoncito\.antigravity\UYARIY-SUMAK\assets\alphabet_test\"
 
 if (!(Test-Path $outputPath)) { New-Item -ItemType Directory -Path $outputPath }
 
 $img = [System.Drawing.Image]::FromFile($sourcePath)
 
-# Configuración de la grilla refinada
+# Configuración de la grilla (Ajustada)
 $startX = 30
 $startY = 180
 $cellW = 210
@@ -30,14 +30,13 @@ for ($row = 0; $row -lt $alphabet.Length; $row++) {
         $x = $startX + ($col * $cellW)
         $y = $startY + ($row * $cellH)
         
-        # Ajustes manuales basados en la inspección visual del póster
+        # Ajustes especiales
         if ($row -eq 4) {
-            if ($col -eq 3) { $x += 35 } # V está desplazada por el label "VARIANTE 1"
-            if ($col -eq 4) { $x = 880 } # W está pegada al borde derecho
+            if ($col -ge 3) { $x += 20 } # Ajuste para V y W
         }
         if ($row -eq 5) {
-            $x += $cellW - 5 # X, Y, Z están centradas (bajo T, U, V)
-            $y -= 15         # Corregir altura para evitar el footer azul
+            $x += $cellW # Desplazar a las columnas centrales
+            $y += 40    # Bajar un poco por los labels de la fila superior
         }
         
         $rect = New-Object System.Drawing.Rectangle($x, $y, 200, 200)
@@ -51,9 +50,9 @@ for ($row = 0; $row -lt $alphabet.Length; $row++) {
         
         $g.Dispose()
         $bmp.Dispose()
-        Write-Host "Guardado: $char.png"
+        Write-Host "Guardado: $char.png (x=$x, y=$y)"
     }
 }
 
 $img.Dispose()
-Write-Host "¡Alfabeto regenerado correctamente!"
+Write-Host "¡Proceso de prueba completado!"
