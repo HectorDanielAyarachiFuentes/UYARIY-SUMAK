@@ -595,6 +595,11 @@ h1 span {
     overflow: hidden;
     text-overflow: ellipsis;
     width: 100%;
+    margin-bottom: 12px; /* Add elegant spacing above the badge */
+}
+
+.concept-card .card-word-ref {
+    display: none; /* Hide redundant lowercase label to prevent overlaps */
 }
 
 /* Collapsible Inline Dactylology Expansion styles */
