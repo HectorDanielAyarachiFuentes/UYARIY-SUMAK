@@ -279,6 +279,11 @@ function crearTarjetaDactilologica(token, palabra) {
     wordRef.innerText = palabra;
     card.appendChild(wordRef);
 
+    // Doble click para abrir modal de zoom de accesibilidad completo
+    card.ondblclick = () => {
+        abrirModalAccesibilidadCompleto();
+    };
+
     return card;
 }
 
@@ -363,6 +368,12 @@ function mostrarConceptoCard(simbolo, palabra) {
             }, 150);
         }
     };
+
+    // Doble click para abrir modal de zoom de accesibilidad completo
+    card.ondblclick = (e) => {
+        e.stopPropagation(); // Evitar que dispare la expansión simple
+        abrirModalAccesibilidadCompleto();
+    };
     
     signOutput.appendChild(wrapper);
     
@@ -400,4 +411,76 @@ function mostrarPalabraDactilologica(palabra) {
     
     // Scroll automático hacia la derecha
     signOutput.scrollLeft = signOutput.scrollWidth;
+}
+
+// --- Modal de Accesibilidad (Súper Zoom de Traducción Completa) ---
+function abrirModalAccesibilidadCompleto() {
+    const modal = document.getElementById('image-modal');
+    const giantOutput = document.getElementById('modal-giant-output');
+    
+    // Limpiar contenido previo
+    giantOutput.innerHTML = "";
+    
+    // Clonar todos los elementos hijos de signOutput
+    const originalChildren = signOutput.children;
+    
+    // Validar si no hay elementos o solo está el mensaje por defecto
+    if (originalChildren.length === 0 || (originalChildren.length === 1 && originalChildren[0].classList.contains('placeholder-msg'))) {
+        return; // No hay traducciones para ampliar
+    }
+    
+    Array.from(originalChildren).forEach((child) => {
+        const clone = child.cloneNode(true);
+        
+        // Quitar eventos de doble click para evitar recursión al clonar
+        clone.ondblclick = null;
+        const subCards = clone.querySelectorAll('.dact-card');
+        subCards.forEach(sub => {
+            sub.ondblclick = null;
+        });
+        
+        // Conservar funcionalidad de colapsar/expandir en tarjetas de conceptos clonadas dentro del modal
+        const conceptCard = clone.querySelector('.concept-card');
+        if (conceptCard) {
+            const badge = clone.querySelector('.spell-badge');
+            conceptCard.onclick = () => {
+                const isExpanded = clone.classList.toggle("expanded");
+                if (badge) {
+                    badge.innerText = isExpanded ? "❌ Cerrar" : "🔍 Deletrear";
+                }
+            };
+        }
+        
+        giantOutput.appendChild(clone);
+    });
+    
+    modal.classList.add('active');
+}
+
+// Escuchar doble click en todo el contenedor de traducción para abrir el zoom gigante
+if (signOutput) {
+    signOutput.ondblclick = (e) => {
+        if (e.target.tagName === 'BUTTON' || e.target.tagName === 'INPUT') return;
+        abrirModalAccesibilidadCompleto();
+    };
+}
+
+// --- Control del Modal de Accesibilidad ---
+const modalElement = document.getElementById('image-modal');
+const modalCloseBtn = document.getElementById('modal-close-btn');
+const modalBackdrop = document.querySelector('.image-modal .modal-backdrop');
+
+if (modalCloseBtn && modalBackdrop) {
+    const cerrarModal = () => {
+        modalElement.classList.remove('active');
+    };
+    modalCloseBtn.onclick = cerrarModal;
+    modalBackdrop.onclick = cerrarModal;
+    
+    // Cerrar con Escape
+    window.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') {
+            cerrarModal();
+        }
+    });
 }
