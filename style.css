@@ -356,6 +356,30 @@ h1 span {
     animation: popIn 0.4s ease-out both;
     position: relative;
     overflow: hidden;
+    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+    cursor: pointer;
+}
+
+.dact-card:hover {
+    transform: translateY(-8px);
+    border-color: var(--primary);
+    box-shadow: 0 10px 25px rgba(78, 146, 255, 0.15);
+}
+
+.dact-card:hover::before {
+    opacity: 1;
+}
+
+.dact-card:hover .card-img {
+    transform: scale(1.12);
+}
+
+.dact-card:hover .card-concept-emoji {
+    transform: scale(1.15);
+}
+
+.dact-card:hover .card-letter-fallback {
+    transform: scale(1.15);
 }
 
 .dact-card::before {
@@ -408,6 +432,7 @@ h1 span {
     font-size: 2.5rem;
     font-weight: 800;
     color: var(--bg-dark);
+    transition: transform 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
 }
 
 .card-img {
@@ -415,6 +440,7 @@ h1 span {
     height: 80px;
     object-fit: contain;
     z-index: 1;
+    transition: transform 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
 }
 
 .card-letter {
@@ -545,6 +571,7 @@ h1 span {
 .card-concept-emoji {
     font-size: 2.8rem;
     filter: drop-shadow(0 4px 8px rgba(0,0,0,0.15));
+    transition: transform 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
 }
 
 .concept-card {
@@ -568,4 +595,72 @@ h1 span {
     overflow: hidden;
     text-overflow: ellipsis;
     width: 100%;
+}
+
+/* Collapsible Inline Dactylology Expansion styles */
+.concept-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 0;
+    transition: all 0.5s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+.inline-spelling {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    max-width: 0;
+    opacity: 0;
+    overflow: hidden;
+    padding: 20px 0;
+    margin-left: 0;
+    transition: max-width 0.5s cubic-bezier(0.25, 0.8, 0.25, 1),
+                opacity 0.4s ease-out,
+                margin-left 0.5s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+.concept-wrapper.expanded .inline-spelling {
+    max-width: 1200px;
+    opacity: 1;
+    margin-left: 15px;
+    padding-right: 10px;
+}
+
+/* Style spelled cards inside inline-spelling */
+.concept-wrapper.expanded .inline-spelling .dact-card {
+    border-color: rgba(78, 146, 255, 0.4);
+    box-shadow: 0 4px 15px rgba(78, 146, 255, 0.08);
+}
+
+/* Badge on Concept Card to indicate clickable spelling */
+.spell-badge {
+    position: absolute;
+    bottom: 5px;
+    font-size: 0.65rem;
+    font-weight: 700;
+    color: var(--primary);
+    background: rgba(78, 146, 255, 0.15);
+    padding: 2px 8px;
+    border-radius: 10px;
+    opacity: 0.8;
+    transition: all 0.3s;
+    pointer-events: none;
+}
+
+.concept-card:hover .spell-badge {
+    opacity: 1;
+    background: var(--primary);
+    color: white;
+    transform: scale(1.05);
+}
+
+/* Visual change when expanded */
+.concept-wrapper.expanded .concept-card {
+    border-color: var(--accent-green);
+    box-shadow: 0 0 20px rgba(74, 222, 128, 0.25);
+}
+
+.concept-wrapper.expanded .spell-badge {
+    background: var(--accent-green);
+    color: var(--bg-dark);
 }

@@ -168,9 +168,56 @@ function mostrarConceptoAvatar(simbolo, palabra) {
     }, 3000);
 }
 
+function crearTarjetaDactilologica(token, palabra) {
+    const card = document.createElement("div");
+    card.className = "dact-card";
+    
+    const cardImgArea = document.createElement("div");
+    cardImgArea.className = "card-img-area";
+
+    if (alfabeto[token.base]) {
+        const img = document.createElement("img");
+        img.src = alfabeto[token.base];
+        img.alt = token.original;
+        img.className = "card-img";
+        
+        img.onerror = () => {
+            img.remove();
+            const fallbackText = document.createElement("div");
+            fallbackText.className = "card-letter-fallback";
+            fallbackText.innerText = token.original.toUpperCase();
+            cardImgArea.appendChild(fallbackText);
+        };
+        cardImgArea.appendChild(img);
+    } else {
+        const fallbackText = document.createElement("div");
+        fallbackText.className = "card-letter-fallback";
+        fallbackText.innerText = token.original.toUpperCase();
+        cardImgArea.appendChild(fallbackText);
+    }
+
+    card.appendChild(cardImgArea);
+
+    const letterDiv = document.createElement("div");
+    letterDiv.className = "card-letter";
+    letterDiv.innerText = token.original.toUpperCase();
+    card.appendChild(letterDiv);
+
+    const wordRef = document.createElement("div");
+    wordRef.className = "card-word-ref";
+    wordRef.innerText = palabra;
+    card.appendChild(wordRef);
+
+    return card;
+}
+
 function mostrarConceptoCard(simbolo, palabra) {
+    const wrapper = document.createElement("div");
+    wrapper.className = "concept-wrapper";
+    
     const card = document.createElement("div");
     card.className = "dact-card concept-card";
+    card.title = "Clic para ver deletreo dactilológico";
     
     const cardImgArea = document.createElement("div");
     cardImgArea.className = "card-img-area";
@@ -192,7 +239,61 @@ function mostrarConceptoCard(simbolo, palabra) {
     wordRef.innerText = palabra;
     card.appendChild(wordRef);
     
-    signOutput.appendChild(card);
+    // Crear el badge de deletreo
+    const badge = document.createElement("div");
+    badge.className = "spell-badge";
+    badge.innerText = "🔍 Deletrear";
+    card.appendChild(badge);
+    
+    wrapper.appendChild(card);
+    
+    // Crear el contenedor de deletreo dactilológico
+    const inlineSpelling = document.createElement("div");
+    inlineSpelling.className = "inline-spelling";
+    
+    // Generar las letras dactilológicas para esta palabra
+    const palabraNormalizada = palabra
+        .normalize("NFC")
+        .split('')
+        .map(char => {
+            if (char.toLowerCase() === 'ñ') return 'ñ';
+            return char.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
+        })
+        .join('');
+
+    let i = 0;
+    const tokens = [];
+    while (i < palabra.length) {
+        if (palabra.substring(i, i + 2).toLowerCase() === "ch") {
+            tokens.push({ original: "ch", base: "ch" });
+            i += 2;
+        } else {
+            tokens.push({ original: palabra[i], base: palabraNormalizada[i] });
+            i++;
+        }
+    }
+
+    tokens.forEach((token) => {
+        const letterCard = crearTarjetaDactilologica(token, palabra);
+        inlineSpelling.appendChild(letterCard);
+    });
+    
+    wrapper.appendChild(inlineSpelling);
+    
+    // Añadir interactividad al hacer clic
+    card.onclick = () => {
+        const isExpanded = wrapper.classList.toggle("expanded");
+        badge.innerText = isExpanded ? "❌ Cerrar" : "🔍 Deletrear";
+        
+        // Auto-scroll para centrar las nuevas tarjetas si se despliegan
+        if (isExpanded) {
+            setTimeout(() => {
+                wrapper.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+            }, 150);
+        }
+    };
+    
+    signOutput.appendChild(wrapper);
     
     // Scroll automático hacia la derecha
     signOutput.scrollLeft = signOutput.scrollWidth;
@@ -222,48 +323,10 @@ function mostrarPalabraDactilologica(palabra) {
     }
 
     tokens.forEach((token) => {
-        const card = document.createElement("div");
-        card.className = "dact-card";
-        
-        const cardImgArea = document.createElement("div");
-        cardImgArea.className = "card-img-area";
-
-        if (alfabeto[token.base]) {
-            const img = document.createElement("img");
-            img.src = alfabeto[token.base];
-            img.alt = token.original;
-            img.className = "card-img";
-            
-            img.onerror = () => {
-                img.remove();
-                const fallbackText = document.createElement("div");
-                fallbackText.className = "card-letter-fallback";
-                fallbackText.innerText = token.original.toUpperCase();
-                cardImgArea.appendChild(fallbackText);
-            };
-            cardImgArea.appendChild(img);
-        } else {
-            const fallbackText = document.createElement("div");
-            fallbackText.className = "card-letter-fallback";
-            fallbackText.innerText = token.original.toUpperCase();
-            cardImgArea.appendChild(fallbackText);
-        }
-
-        card.appendChild(cardImgArea);
-
-        const letterDiv = document.createElement("div");
-        letterDiv.className = "card-letter";
-        letterDiv.innerText = token.original.toUpperCase();
-        card.appendChild(letterDiv);
-
-        const wordRef = document.createElement("div");
-        wordRef.className = "card-word-ref";
-        wordRef.innerText = palabra;
-        card.appendChild(wordRef);
-
+        const card = crearTarjetaDactilologica(token, palabra);
         signOutput.appendChild(card);
-        
-        // Scroll automático hacia la derecha
-        signOutput.scrollLeft = signOutput.scrollWidth;
     });
+    
+    // Scroll automático hacia la derecha
+    signOutput.scrollLeft = signOutput.scrollWidth;
 }
