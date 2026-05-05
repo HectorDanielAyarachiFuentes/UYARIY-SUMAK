@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UYARIY SUMAK | Traductor de Señas</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="glass-background"></div>
+    
+    <main class="app-container">
+        <header class="main-header">
+            <div class="logo">
+                <span class="logo-icon">👂</span>
+                <div class="logo-text">
+                    <h1>UYARIY <span>SUMAK</span></h1>
+                </div>
+            </div>
+            
+            <div class="language-selector">
+                <div class="selector-wrapper">
+                    <div class="selector-box">
+                        <div class="selector-part">
+                            <img src="https://flagcdn.com/w40/es.png" class="flag-img" alt="España">
+                            <span class="lang-label">ESPAÑOL</span>
+                        </div>
+                        <span class="arrow">→</span>
+                        <div class="selector-part">
+                            <img src="https://flagcdn.com/w40/ar.png" class="flag-img" alt="Argentina">
+                            <span class="lang-label">LSA</span>
+                        </div>
+                        <span class="chevron">▼</span>
+                    </div>
+                    
+                    <div class="dropdown-menu">
+                        <div class="dropdown-section">
+                            <div class="section-title">IDIOMA DE ENTRADA</div>
+                            <ul>
+                                <li class="active">
+                                    <img src="https://flagcdn.com/w20/es.png" class="mini-flag"> Español
+                                </li>
+                                <li class="disabled">
+                                    <img src="https://flagcdn.com/w20/us.png" class="mini-flag"> English
+                                </li>
+                                <li class="disabled">
+                                    <img src="https://flagcdn.com/w20/br.png" class="mini-flag"> Português
+                                </li>
+                            </ul>
+                        </div>
+                        
+                        <div class="dropdown-section">
+                            <div class="section-title">LENGUAJE DE SEÑAS</div>
+                            <ul>
+                                <li class="active">
+                                    <img src="https://flagcdn.com/w20/ar.png" class="mini-flag"> LSA (Argentina)
+                                </li>
+                                <li class="disabled">
+                                    <img src="https://flagcdn.com/w20/cl.png" class="mini-flag"> LSCh (Chile)
+                                </li>
+                                <li class="disabled">
+                                    <img src="https://flagcdn.com/w20/mx.png" class="mini-flag"> LSM (México)</li>
+                                <li class="disabled">
+                                    <img src="https://flagcdn.com/w20/uy.png" class="mini-flag"> LSU (Uruguay)</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <section class="visualization-container">
+            <div class="viz-header">VISUALIZATION</div>
+            
+            <div class="main-split">
+                <!-- Lado Izquierdo: Avatar / Conceptos -->
+                <div class="avatar-side">
+                    <div id="facial-expression" class="emoji-face">😐</div>
+                    <div class="avatar-viewport">
+                        <div id="avatar-display" class="avatar-content">
+                            <!-- Aquí se mostrarán los emojis de conceptos grandes o animaciones -->
+                            <div class="avatar-placeholder">
+                                <div class="face-mesh"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Lado Derecho: Dactilología -->
+                <div class="dact-side">
+                    <div class="side-label">DACTILOLOGÍA (DELETREO)</div>
+                    <div id="sign-output" class="cards-viewport">
+                        <div class="placeholder-msg">Presiona el botón para comenzar...</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <div class="bottom-controls">
+            <div class="transcript-bubble">
+                <p id="text-preview" class="empty">Esperando entrada de voz...</p>
+            </div>
+
+            <button id="btn-listen" class="pro-button">
+                <span class="btn-content">
+                    <span class="mic-icon">🎤</span>
+                    <span class="btn-text">Empezar a Escuchar</span>
+                </span>
+                <div class="btn-glow"></div>
+            </button>
+        </div>
+    </main>
+
+    <script src="script.js"></script>
+</body>
+</html>
