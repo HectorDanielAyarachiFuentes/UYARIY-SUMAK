@@ -140,10 +140,59 @@ function traducirTextoIngresado() {
 
 if (btnTranslate && textInput) {
     btnTranslate.onclick = traducirTextoIngresado;
+    
+    let alternateHandLeft = true;
     textInput.onkeydown = (e) => {
         if (e.key === 'Enter') {
             traducirTextoIngresado();
+            return;
         }
+
+        // Teclas que ignoramos para no activar golpe de teclado físico
+        const ignoreKeys = ['Shift', 'Control', 'Alt', 'Escape', 'ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'CapsLock', 'Tab'];
+        if (ignoreKeys.includes(e.key)) return;
+
+        // Activar estado escribiendo si no está activo ya
+        faceOutput.classList.remove('listening');
+        faceOutput.classList.add('typing');
+        actualizarEmojiRostro("🧐");
+
+        // Conseguir referencias internas de manos y teclado
+        const handLeft = faceOutput.querySelector('.hand-left');
+        const handRight = faceOutput.querySelector('.hand-right');
+        const keyboard = faceOutput.querySelector('.keyboard-icon');
+
+        // Alternar mano en cada pulsación (incluidos espacios!)
+        if (alternateHandLeft) {
+            if (handLeft) {
+                handLeft.classList.remove('tapped');
+                void handLeft.offsetWidth; // Trigger reflow
+                handLeft.classList.add('tapped');
+            }
+        } else {
+            if (handRight) {
+                handRight.classList.remove('tapped');
+                void handRight.offsetWidth; // Trigger reflow
+                handRight.classList.add('tapped');
+            }
+        }
+
+        // Animación elástica del teclado (Squash)
+        if (keyboard) {
+            keyboard.classList.remove('tapped');
+            void keyboard.offsetWidth; // Trigger reflow
+            keyboard.classList.add('tapped');
+        }
+
+        // Alternar bandera
+        alternateHandLeft = !alternateHandLeft;
+
+        // Reiniciar el temporizador de inactividad
+        clearTimeout(typingTimeout);
+        typingTimeout = setTimeout(() => {
+            faceOutput.classList.remove('typing');
+            actualizarEmojiRostro("🙂");
+        }, 2000);
     };
 
     // Listeners de estado de escritura para animar el rostro avatar
@@ -151,18 +200,6 @@ if (btnTranslate && textInput) {
         faceOutput.classList.remove('listening');
         faceOutput.classList.add('typing');
         actualizarEmojiRostro("🧐");
-    });
-    
-    textInput.addEventListener('input', () => {
-        faceOutput.classList.remove('listening');
-        faceOutput.classList.add('typing');
-        actualizarEmojiRostro("🧐");
-        
-        clearTimeout(typingTimeout);
-        typingTimeout = setTimeout(() => {
-            faceOutput.classList.remove('typing');
-            actualizarEmojiRostro("🙂");
-        }, 2000); // 2 segundos de inactividad de escritura restauran estado neutral
     });
     
     textInput.addEventListener('blur', () => {
