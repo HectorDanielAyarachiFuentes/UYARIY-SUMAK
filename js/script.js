@@ -19,7 +19,7 @@ let diccionario = {};
 let alfabeto = {};
 
 // Cargar el diccionario desde el JSON externo
-fetch('diccionario_lsa.json')
+fetch('data/diccionario_lsa.json')
     .then(response => response.json())
     .then(data => {
         diccionario = data.conceptos;
