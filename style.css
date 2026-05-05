@@ -669,3 +669,24 @@ h1 span {
     background: var(--accent-green);
     color: var(--bg-dark);
 }
+
+/* Inter-word spacing separator */
+.word-spacer {
+    min-width: 40px;
+    height: 180px; /* match card height */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    user-select: none;
+    pointer-events: none;
+}
+
+.word-spacer::after {
+    content: '';
+    width: 2px;
+    height: 50px;
+    background: rgba(255, 255, 255, 0.08);
+    border-radius: 1px;
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.05);
+}

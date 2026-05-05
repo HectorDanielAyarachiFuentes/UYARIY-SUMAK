@@ -136,6 +136,7 @@ function procesarMensaje(texto) {
     }
 
     const palabras = texto.split(/\s+/);
+    let firstWord = true;
 
     palabras.forEach((palabra) => {
         const limpia = palabra.replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/g,"");
@@ -146,12 +147,26 @@ function procesarMensaje(texto) {
             .toLowerCase();
         
         if (diccionario[limpiaNormalizada]) {
+            if (!firstWord) {
+                agregarEspacioEntrePalabras();
+            }
             mostrarConceptoAvatar(diccionario[limpiaNormalizada], limpia);
             mostrarConceptoCard(diccionario[limpiaNormalizada], limpia);
+            firstWord = false;
         } else if (limpia.length > 0) {
+            if (!firstWord) {
+                agregarEspacioEntrePalabras();
+            }
             mostrarPalabraDactilologica(limpia);
+            firstWord = false;
         }
     });
+}
+
+function agregarEspacioEntrePalabras() {
+    const spacer = document.createElement("div");
+    spacer.className = "word-spacer";
+    signOutput.appendChild(spacer);
 }
 
 function mostrarConceptoAvatar(simbolo, palabra) {
