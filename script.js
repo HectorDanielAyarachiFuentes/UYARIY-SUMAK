@@ -137,7 +137,15 @@ function mostrarConceptoAvatar(simbolo, palabra) {
 }
 
 function mostrarPalabraDactilologica(palabra) {
-    const palabraNormalizada = palabra.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+    // Normalizar conservando la letra 'ñ' y 'Ñ' que tienen su propia representación
+    const palabraNormalizada = palabra
+        .normalize("NFC")
+        .split('')
+        .map(char => {
+            if (char.toLowerCase() === 'ñ') return 'ñ';
+            return char.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
+        })
+        .join('');
 
     let i = 0;
     const tokens = [];
