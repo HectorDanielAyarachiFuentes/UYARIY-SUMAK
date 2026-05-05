@@ -276,6 +276,117 @@ h1 span {
     border-radius: 50%;
     box-shadow: 0 0 30px rgba(255, 170, 78, 0.2);
     border: 1px solid rgba(255, 170, 78, 0.3);
+    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+/* Base states for sub-elements */
+.emoji-face .face-char {
+    transition: all 0.3s ease;
+    z-index: 2;
+}
+
+.emoji-face .keyboard-icon,
+.emoji-face .hand-left,
+.emoji-face .hand-right,
+.emoji-face .headphones-icon,
+.emoji-face .sound-waves {
+    position: absolute;
+    opacity: 0;
+    transform: scale(0.5);
+    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    pointer-events: none;
+}
+
+/* TYPING STATE Styles & Animations */
+.emoji-face.typing {
+    background: rgba(78, 146, 255, 0.15);
+    border-color: rgba(78, 146, 255, 0.4);
+    box-shadow: 0 0 35px rgba(78, 146, 255, 0.3);
+}
+
+.emoji-face.typing .keyboard-icon {
+    opacity: 1;
+    transform: scale(1) translateY(42px);
+    font-size: 2.2rem;
+    z-index: 3;
+}
+
+.emoji-face.typing .hand-left {
+    opacity: 1;
+    font-size: 1.4rem;
+    transform: scale(1) translate(-28px, 35px);
+    z-index: 4;
+    animation: typeHandLeft 0.25s infinite alternate ease-in-out;
+}
+
+.emoji-face.typing .hand-right {
+    opacity: 1;
+    font-size: 1.4rem;
+    transform: scale(1) translate(28px, 35px);
+    z-index: 4;
+    animation: typeHandRight 0.23s infinite alternate ease-in-out;
+}
+
+@keyframes typeHandLeft {
+    0% { transform: scale(1) translate(-28px, 35px) rotate(-10deg); }
+    100% { transform: scale(1) translate(-24px, 28px) rotate(5deg); }
+}
+
+@keyframes typeHandRight {
+    0% { transform: scale(1) translate(28px, 35px) rotate(10deg); }
+    100% { transform: scale(1) translate(24px, 28px) rotate(-5deg); }
+}
+
+/* LISTENING STATE Styles & Animations */
+.emoji-face.listening {
+    background: rgba(244, 63, 94, 0.15);
+    border-color: rgba(244, 63, 94, 0.4);
+    box-shadow: 0 0 35px rgba(244, 63, 94, 0.3);
+}
+
+.emoji-face.listening .headphones-icon {
+    opacity: 1;
+    transform: scale(1) translateY(-2px);
+    font-size: 4.8rem;
+    z-index: 5;
+    animation: bounceHeadphones 1.5s infinite ease-in-out;
+}
+
+.emoji-face.listening .sound-waves {
+    opacity: 1;
+    transform: scale(1);
+    display: flex;
+    gap: 3px;
+    bottom: -15px;
+    z-index: 6;
+}
+
+.emoji-face.listening .wave {
+    width: 3px;
+    height: 12px;
+    background: var(--accent-red, #f43f5e);
+    border-radius: 2px;
+    animation: wavePulse 0.8s infinite alternate ease-in-out;
+}
+
+.emoji-face.listening .wave:nth-child(2) {
+    animation-delay: 0.25s;
+    height: 18px;
+}
+
+.emoji-face.listening .wave:nth-child(3) {
+    animation-delay: 0.5s;
+    height: 10px;
+}
+
+@keyframes bounceHeadphones {
+    0%, 100% { transform: scale(1) translateY(-2px); }
+    50% { transform: scale(1.05) translateY(-5px); }
+}
+
+@keyframes wavePulse {
+    0% { transform: scaleY(0.4); }
+    100% { transform: scaleY(1.4); }
 }
 
 .avatar-viewport {

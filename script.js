@@ -5,6 +5,16 @@ const preview = document.getElementById('text-preview');
 const container = document.querySelector('.app-container');
 const micIcon = btn.querySelector('.mic-icon');
 
+function actualizarEmojiRostro(emoji) {
+    if (!faceOutput) return;
+    const faceChar = faceOutput.querySelector('.face-char');
+    if (faceChar) {
+        faceChar.innerText = emoji;
+    } else {
+        faceOutput.innerText = emoji;
+    }
+}
+
 let diccionario = {};
 let alfabeto = {};
 
@@ -68,7 +78,11 @@ if (!SpeechRecognition) {
         btn.title = "Detener Escucha";
         preview.innerText = "Escuchando...";
         preview.classList.remove('empty');
-        faceOutput.innerText = "😮";
+        
+        // Activar estado de escucha animado
+        faceOutput.classList.remove('typing');
+        faceOutput.classList.add('listening');
+        actualizarEmojiRostro("😮");
     };
 
     recognition.onend = () => {
@@ -77,6 +91,10 @@ if (!SpeechRecognition) {
         document.body.classList.remove('listening');
         micIcon.innerText = "🎤";
         btn.title = "Empezar a Escuchar";
+        
+        // Quitar estado de escucha animado
+        faceOutput.classList.remove('listening');
+        actualizarEmojiRostro("🙂");
     };
 
     recognition.onresult = (event) => {
@@ -93,18 +111,28 @@ if (!SpeechRecognition) {
         isProcessing = false;
         micIcon.innerText = "🎤";
         btn.title = "Empezar a Escuchar";
+        
+        // Quitar estado en caso de error
+        faceOutput.classList.remove('listening');
+        actualizarEmojiRostro("😐");
     };
 }
 
 // --- Lógica de Traducción por Texto ---
 const textInput = document.getElementById('text-input');
 const btnTranslate = document.getElementById('btn-translate');
+let typingTimeout;
 
 function traducirTextoIngresado() {
     const texto = textInput.value.trim();
     if (texto.length > 0) {
         preview.innerText = `Traducido: "${texto}"`;
         preview.classList.remove('empty');
+        
+        // Quitar estado de escritura inmediatamente
+        clearTimeout(typingTimeout);
+        faceOutput.classList.remove('typing');
+        
         procesarMensaje(texto);
         textInput.value = ""; // Limpiar input después de traducir
     }
@@ -117,6 +145,34 @@ if (btnTranslate && textInput) {
             traducirTextoIngresado();
         }
     };
+
+    // Listeners de estado de escritura para animar el rostro avatar
+    textInput.addEventListener('focus', () => {
+        faceOutput.classList.remove('listening');
+        faceOutput.classList.add('typing');
+        actualizarEmojiRostro("🧐");
+    });
+    
+    textInput.addEventListener('input', () => {
+        faceOutput.classList.remove('listening');
+        faceOutput.classList.add('typing');
+        actualizarEmojiRostro("🧐");
+        
+        clearTimeout(typingTimeout);
+        typingTimeout = setTimeout(() => {
+            faceOutput.classList.remove('typing');
+            actualizarEmojiRostro("🙂");
+        }, 2000); // 2 segundos de inactividad de escritura restauran estado neutral
+    });
+    
+    textInput.addEventListener('blur', () => {
+        setTimeout(() => {
+            if (document.activeElement !== textInput) {
+                faceOutput.classList.remove('typing');
+                actualizarEmojiRostro("🙂");
+            }
+        }, 500);
+    });
 }
 
 // 3. Lógica de Traducción
@@ -124,15 +180,15 @@ function procesarMensaje(texto) {
     signOutput.innerHTML = ""; 
     const avatarContent = document.getElementById('avatar-display');
     
-    // Cambiar cara según el tono
+    // Cambiar cara según el tono usando el actualizador de rostro seguro
     if (texto.includes("donde") || texto.includes("que") || texto.includes("como") || texto.includes("cuándo")) {
-        faceOutput.innerText = "🤨";
+        actualizarEmojiRostro("🤨");
     } else if (texto.includes("feliz") || texto.includes("gracias") || texto.includes("bien")) {
-        faceOutput.innerText = "😊";
+        actualizarEmojiRostro("😊");
     } else if (texto.includes("triste") || texto.includes("mal")) {
-        faceOutput.innerText = "😔";
+        actualizarEmojiRostro("😔");
     } else {
-        faceOutput.innerText = "🙂";
+        actualizarEmojiRostro("🙂");
     }
 
     const palabras = texto.split(/\s+/);
