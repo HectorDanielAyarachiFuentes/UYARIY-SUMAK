@@ -101,16 +101,18 @@
 
         <div class="bottom-controls">
             <div class="transcript-bubble">
-                <p id="text-preview" class="empty">Esperando entrada de voz...</p>
+                <p id="text-preview" class="empty">Esperando entrada de voz o texto...</p>
             </div>
 
-            <button id="btn-listen" class="pro-button">
-                <span class="btn-content">
+            <div class="input-container">
+                <input type="text" id="text-input" placeholder="Escribe una palabra o frase para traducir..." autocomplete="off">
+                <button id="btn-translate" class="action-btn translate-btn" title="Traducir texto">
+                    <span>➡️</span>
+                </button>
+                <button id="btn-listen" class="action-btn mic-btn" title="Empezar a Escuchar">
                     <span class="mic-icon">🎤</span>
-                    <span class="btn-text">Empezar a Escuchar</span>
-                </span>
-                <div class="btn-glow"></div>
-            </button>
+                </button>
+            </div>
         </div>
     </main>
 

@@ -3,7 +3,7 @@ const signOutput = document.getElementById('sign-output');
 const faceOutput = document.getElementById('facial-expression');
 const preview = document.getElementById('text-preview');
 const container = document.querySelector('.app-container');
-const btnText = btn.querySelector('.btn-text');
+const micIcon = btn.querySelector('.mic-icon');
 
 let diccionario = {};
 let alfabeto = {};
@@ -64,7 +64,8 @@ if (!SpeechRecognition) {
         isListening = true;
         isProcessing = false;
         document.body.classList.add('listening');
-        btnText.innerText = "Escuchando...";
+        micIcon.innerText = "⏹️";
+        btn.title = "Detener Escucha";
         preview.innerText = "Escuchando...";
         preview.classList.remove('empty');
         faceOutput.innerText = "😮";
@@ -74,7 +75,8 @@ if (!SpeechRecognition) {
         isListening = false;
         isProcessing = false;
         document.body.classList.remove('listening');
-        btnText.innerText = "Empezar a Escuchar";
+        micIcon.innerText = "🎤";
+        btn.title = "Empezar a Escuchar";
     };
 
     recognition.onresult = (event) => {
@@ -89,7 +91,31 @@ if (!SpeechRecognition) {
         document.body.classList.remove('listening');
         isListening = false;
         isProcessing = false;
-        btnText.innerText = "Empezar a Escuchar";
+        micIcon.innerText = "🎤";
+        btn.title = "Empezar a Escuchar";
+    };
+}
+
+// --- Lógica de Traducción por Texto ---
+const textInput = document.getElementById('text-input');
+const btnTranslate = document.getElementById('btn-translate');
+
+function traducirTextoIngresado() {
+    const texto = textInput.value.trim();
+    if (texto.length > 0) {
+        preview.innerText = `Traducido: "${texto}"`;
+        preview.classList.remove('empty');
+        procesarMensaje(texto);
+        textInput.value = ""; // Limpiar input después de traducir
+    }
+}
+
+if (btnTranslate && textInput) {
+    btnTranslate.onclick = traducirTextoIngresado;
+    textInput.onkeydown = (e) => {
+        if (e.key === 'Enter') {
+            traducirTextoIngresado();
+        }
     };
 }
 
@@ -113,9 +139,15 @@ function procesarMensaje(texto) {
 
     palabras.forEach((palabra) => {
         const limpia = palabra.replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/g,"");
+        // Normalizar la palabra para ignorar mayúsculas y acentos al buscar en el diccionario (ej: "mamá" -> "mama")
+        const limpiaNormalizada = limpia
+            .normalize("NFD")
+            .replace(/[\u0300-\u036f]/g, "")
+            .toLowerCase();
         
-        if (diccionario[limpia]) {
-            mostrarConceptoAvatar(diccionario[limpia], limpia);
+        if (diccionario[limpiaNormalizada]) {
+            mostrarConceptoAvatar(diccionario[limpiaNormalizada], limpia);
+            mostrarConceptoCard(diccionario[limpiaNormalizada], limpia);
         } else if (limpia.length > 0) {
             mostrarPalabraDactilologica(limpia);
         }
@@ -134,6 +166,36 @@ function mostrarConceptoAvatar(simbolo, palabra) {
     setTimeout(() => {
         avatarContent.innerHTML = '<div class="avatar-placeholder"><div class="face-mesh"></div></div>';
     }, 3000);
+}
+
+function mostrarConceptoCard(simbolo, palabra) {
+    const card = document.createElement("div");
+    card.className = "dact-card concept-card";
+    
+    const cardImgArea = document.createElement("div");
+    cardImgArea.className = "card-img-area";
+    
+    const emojiSpan = document.createElement("span");
+    emojiSpan.className = "card-concept-emoji";
+    emojiSpan.innerText = simbolo;
+    cardImgArea.appendChild(emojiSpan);
+    
+    card.appendChild(cardImgArea);
+    
+    const letterDiv = document.createElement("div");
+    letterDiv.className = "card-letter concept-title";
+    letterDiv.innerText = palabra.toUpperCase();
+    card.appendChild(letterDiv);
+    
+    const wordRef = document.createElement("div");
+    wordRef.className = "card-word-ref";
+    wordRef.innerText = palabra;
+    card.appendChild(wordRef);
+    
+    signOutput.appendChild(card);
+    
+    // Scroll automático hacia la derecha
+    signOutput.scrollLeft = signOutput.scrollWidth;
 }
 
 function mostrarPalabraDactilologica(palabra) {
