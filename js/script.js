@@ -515,3 +515,23 @@ if (modalCloseBtn && modalBackdrop) {
         }
     });
 }
+
+// --- Scroll horizontal con la rueda del ratón ---
+if (signOutput) {
+    signOutput.addEventListener('wheel', (evt) => {
+        if (evt.deltaY !== 0) {
+            evt.preventDefault();
+            signOutput.scrollLeft += evt.deltaY;
+        }
+    });
+}
+
+const giantOutput = document.getElementById('modal-giant-output');
+if (giantOutput) {
+    giantOutput.addEventListener('wheel', (evt) => {
+        if (evt.deltaY !== 0) {
+            evt.preventDefault();
+            giantOutput.scrollLeft += evt.deltaY;
+        }
+    });
+}
