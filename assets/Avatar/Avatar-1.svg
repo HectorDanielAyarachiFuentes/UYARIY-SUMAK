@@ -1,5 +1,5 @@
  <svg width="300" height="520" viewBox="0 0 300 520" xmlns="http://www.w3.org/2000/svg">
-        
+    
         <!-- PIERNAS Y ZAPATOS -->
         <rect x="115" y="380" width="30" height="100" fill="#2C3E50" rx="5" />
         <rect x="155" y="380" width="30" height="100" fill="#2C3E50" rx="5" />
@@ -29,14 +29,16 @@
         <g id="brazo-derecho">
             <rect x="197" y="230" width="28" height="65" rx="14" fill="#3D5A6C" />
             <circle cx="211" cy="295" r="14" fill="#3D5A6C" />
-            <rect x="197" y="295" width="28" height="65" rx="14" fill="#3D5A6C" />
-            <g transform="translate(197, 355)">
-                <rect x="4" y="0" width="20" height="18" rx="8" fill="#EDB98A" />
-                <rect x="20" y="4" width="8" height="12" rx="3" fill="#EDB98A" transform="rotate(30 28 4)" />
-                <rect x="4" y="14" width="4" height="10" rx="2" fill="#EDB98A" />
-                <rect x="9" y="15" width="4" height="12" rx="2" fill="#EDB98A" />
-                <rect x="14" y="15" width="4" height="12" rx="2" fill="#EDB98A" />
-                <rect x="19" y="14" width="4" height="10" rx="2" fill="#EDB98A" />
+            <g id="antebrazo-derecho">
+                <rect x="197" y="295" width="28" height="65" rx="14" fill="#3D5A6C" />
+                <g transform="translate(197, 355)">
+                    <rect x="4" y="0" width="20" height="18" rx="8" fill="#EDB98A" />
+                    <rect x="20" y="4" width="8" height="12" rx="3" fill="#EDB98A" transform="rotate(30 28 4)" />
+                    <rect x="4" y="14" width="4" height="10" rx="2" fill="#EDB98A" />
+                    <rect x="9" y="15" width="4" height="12" rx="2" fill="#EDB98A" />
+                    <rect x="14" y="15" width="4" height="12" rx="2" fill="#EDB98A" />
+                    <rect x="19" y="14" width="4" height="10" rx="2" fill="#EDB98A" />
+                </g>
             </g>
         </g>
 

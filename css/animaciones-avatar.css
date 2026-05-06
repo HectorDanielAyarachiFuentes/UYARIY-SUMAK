@@ -1,0 +1,31 @@
+/* =========================================
+   ANIMACIONES DEL AVATAR
+   ========================================= */
+
+@keyframes raiseArm {
+    0% { transform: rotate(0deg); }
+    10%, 90% { transform: rotate(-135deg); }
+    100% { transform: rotate(0deg); }
+}
+
+@keyframes waveForearm {
+    0%, 10% { transform: rotate(0deg); }
+    20% { transform: rotate(20deg); }
+    30% { transform: rotate(-20deg); }
+    40% { transform: rotate(20deg); }
+    50% { transform: rotate(-20deg); }
+    60% { transform: rotate(20deg); }
+    70% { transform: rotate(-20deg); }
+    80% { transform: rotate(20deg); }
+    90%, 100% { transform: rotate(0deg); }
+}
+
+#brazo-derecho {
+    transform-origin: 211px 244px;
+    animation: raiseArm 3s infinite ease-in-out;
+}
+
+#antebrazo-derecho {
+    transform-origin: 211px 295px;
+    animation: waveForearm 3s infinite ease-in-out;
+}

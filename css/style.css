@@ -811,9 +811,11 @@ h1 span {
 }
 
 .concept-wrapper.expanded .spell-badge {
+    opacity: 1;
     background: var(--accent-green);
     color: var(--bg-dark);
 }
+
 
 /* Inter-word spacing separator */
 .word-spacer {
