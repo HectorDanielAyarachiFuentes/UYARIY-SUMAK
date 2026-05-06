@@ -80,6 +80,20 @@ h1 span {
     font-style: italic;
 }
 
+.logo-text {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.logo-subtitle {
+    font-size: 0.65rem;
+    color: var(--text-muted);
+    letter-spacing: 0.5px;
+    margin-top: -2px;
+    font-weight: 400;
+}
+
 .language-selector {
     display: flex;
     align-items: center;
