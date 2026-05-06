@@ -464,7 +464,7 @@ h1 span {
 .dact-side {
     display: flex;
     flex-direction: column;
-    padding: 20px;
+    padding: 20px 0;
     min-width: 0;
 }
 
@@ -474,6 +474,7 @@ h1 span {
     font-weight: 600;
     color: var(--text-muted);
     margin-bottom: 20px;
+    padding: 0 20px;
 }
 
 .cards-viewport {
@@ -482,7 +483,7 @@ h1 span {
     align-items: center;
     gap: 15px;
     overflow-x: auto;
-    padding: 20px 0;
+    padding: 20px;
     scrollbar-width: thin;
     scrollbar-color: var(--primary) transparent;
 }

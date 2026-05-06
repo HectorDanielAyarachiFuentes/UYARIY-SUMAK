@@ -413,9 +413,6 @@ function mostrarConceptoCard(simbolo, palabra) {
     };
     
     signOutput.appendChild(wrapper);
-    
-    // Scroll automático hacia la derecha
-    signOutput.scrollLeft = signOutput.scrollWidth;
 }
 
 function mostrarPalabraDactilologica(palabra) {
@@ -445,9 +442,6 @@ function mostrarPalabraDactilologica(palabra) {
         const card = crearTarjetaDactilologica(token, palabra);
         signOutput.appendChild(card);
     });
-    
-    // Scroll automático hacia la derecha
-    signOutput.scrollLeft = signOutput.scrollWidth;
 }
 
 // --- Modal de Accesibilidad (Súper Zoom de Traducción Completa) ---
