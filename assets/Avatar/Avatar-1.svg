@@ -1,0 +1,67 @@
+ <svg width="300" height="520" viewBox="0 0 300 520" xmlns="http://www.w3.org/2000/svg">
+        
+        <!-- PIERNAS Y ZAPATOS -->
+        <rect x="115" y="380" width="30" height="100" fill="#2C3E50" rx="5" />
+        <rect x="155" y="380" width="30" height="100" fill="#2C3E50" rx="5" />
+        <path d="M115 480 Q115 495 100 495 L145 495 Q145 480 145 480 Z" fill="#333" />
+        <path d="M155 480 Q155 495 140 495 L185 495 Q185 480 185 480 Z" fill="#333" />
+
+        <!-- CUERPO / TORSO -->
+        <rect x="100" y="220" width="100" height="170" rx="20" fill="#3D5A6C" />
+        <rect x="125" y="220" width="50" height="170" fill="#1A1A1B" />
+        
+        <!-- BRAZO IZQUIERDO CON CODO -->
+        <g id="brazo-izquierdo">
+            <rect x="75" y="230" width="28" height="65" rx="14" fill="#3D5A6C" />
+            <circle cx="89" cy="295" r="14" fill="#3D5A6C" />
+            <rect x="75" y="295" width="28" height="65" rx="14" fill="#3D5A6C" />
+            <g transform="translate(75, 355)">
+                <rect x="4" y="0" width="20" height="18" rx="8" fill="#EDB98A" />
+                <rect x="0" y="4" width="8" height="12" rx="3" fill="#EDB98A" transform="rotate(-30 0 4)" />
+                <rect x="5" y="14" width="4" height="10" rx="2" fill="#EDB98A" />
+                <rect x="10" y="15" width="4" height="12" rx="2" fill="#EDB98A" />
+                <rect x="15" y="15" width="4" height="12" rx="2" fill="#EDB98A" />
+                <rect x="20" y="14" width="4" height="10" rx="2" fill="#EDB98A" />
+            </g>
+        </g>
+
+        <!-- BRAZO DERECHO CON CODO -->
+        <g id="brazo-derecho">
+            <rect x="197" y="230" width="28" height="65" rx="14" fill="#3D5A6C" />
+            <circle cx="211" cy="295" r="14" fill="#3D5A6C" />
+            <rect x="197" y="295" width="28" height="65" rx="14" fill="#3D5A6C" />
+            <g transform="translate(197, 355)">
+                <rect x="4" y="0" width="20" height="18" rx="8" fill="#EDB98A" />
+                <rect x="20" y="4" width="8" height="12" rx="3" fill="#EDB98A" transform="rotate(30 28 4)" />
+                <rect x="4" y="14" width="4" height="10" rx="2" fill="#EDB98A" />
+                <rect x="9" y="15" width="4" height="12" rx="2" fill="#EDB98A" />
+                <rect x="14" y="15" width="4" height="12" rx="2" fill="#EDB98A" />
+                <rect x="19" y="14" width="4" height="10" rx="2" fill="#EDB98A" />
+            </g>
+        </g>
+
+        <!-- SOLAPAS DE LA CHAQUETA -->
+        <path d="M125 220 L100 280 L125 320 Z" fill="#4A6D81" />
+        <path d="M175 220 L200 280 L175 320 Z" fill="#4A6D81" />
+        <path d="M178 330 L195 330 L186 320 Z" fill="#FFFFFF" opacity="0.8" />
+        <rect x="135" y="210" width="30" height="20" fill="#EDB98A" />
+
+        <!-- CABEZA -->
+        <path d="M90 120 Q90 60 150 60 Q210 60 210 120 L210 180 Q210 220 150 220 Q90 220 90 180 Z" fill="#EDB98A" />
+        <path d="M90 160 L90 80 Q90 40 150 40 Q210 40 210 80 L210 230 L195 230 L195 130 Q195 80 150 80 Q105 80 105 130 L105 230 L90 230 Z" fill="#4E342E" />
+        <path d="M90 120 Q90 60 150 60 Q180 60 190 80 L100 80 Z" fill="#4E342E" />
+
+        <!-- OJOS -->
+        <circle cx="130" cy="140" r="5" fill="#6D4C41" />
+        <circle cx="170" cy="140" r="5" fill="#6D4C41" />
+        
+        <!-- CEJAS NUEVAS -->
+        <path d="M118 125 Q130 118 142 125" stroke="#4E342E" stroke-width="3" fill="none" stroke-linecap="round" /> <!-- Ceja Izquierda -->
+        <path d="M158 125 Q170 118 182 125" stroke="#4E342E" stroke-width="3" fill="none" stroke-linecap="round" /> <!-- Ceja Derecha -->
+
+        <!-- NARIZ -->
+        <path d="M145 165 Q150 170 155 165" stroke="#D0A080" stroke-width="2" fill="none" />
+
+        <!-- BOCA -->
+        <path d="M135 185 Q150 205 165 185 Z" fill="#333" />
+    </svg>
