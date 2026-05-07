@@ -263,16 +263,35 @@ function agregarEspacioEntrePalabras() {
 }
 
 function mostrarConceptoAvatar(simbolo, palabra) {
-    const avatarContent = document.getElementById('avatar-display');
-    avatarContent.innerHTML = `
-        <div class="concept-viz">
-            <span class="concept-emoji">${simbolo}</span>
-            <span class="concept-label">${palabra}</span>
-        </div>
+    const avatarPlaceholder = document.querySelector('.avatar-placeholder');
+    if (!avatarPlaceholder) return;
+    
+    // Quitar concepto anterior si existe
+    const prevConcept = avatarPlaceholder.querySelector('.concept-viz');
+    if (prevConcept) prevConcept.remove();
+    
+    const conceptViz = document.createElement('div');
+    conceptViz.className = 'concept-viz';
+    conceptViz.style.position = 'absolute';
+    conceptViz.style.zIndex = '10';
+    conceptViz.style.top = '50%';
+    conceptViz.style.left = '50%';
+    conceptViz.style.transform = 'translate(-50%, -50%)';
+    conceptViz.style.background = 'rgba(11, 14, 20, 0.8)';
+    conceptViz.style.padding = '20px';
+    conceptViz.style.borderRadius = '20px';
+    conceptViz.style.backdropFilter = 'blur(5px)';
+    
+    conceptViz.innerHTML = `
+        <span class="concept-emoji">${simbolo}</span>
+        <span class="concept-label">${palabra}</span>
     `;
+    
+    avatarPlaceholder.appendChild(conceptViz);
+    
     // Limpiar después de 3 segundos para que vuelva el avatar por defecto
     setTimeout(() => {
-        avatarContent.innerHTML = '<div class="avatar-placeholder"><div class="face-mesh"></div></div>';
+        if (conceptViz.parentNode) conceptViz.remove();
     }, 3000);
 }
 
